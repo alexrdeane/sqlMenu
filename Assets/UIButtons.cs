@@ -49,7 +49,15 @@ public class UIButtons : MonoBehaviour
     public void SubmitCodeButton()
     {
         SetAllInactive();
-        changePasswordMenu.SetActive(true);
+        if (Signin.updateCode.text == Signin.randomCode)
+        {
+            changePasswordMenu.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Code Incorrect");
+        }
+
     }
 
     public void SetAllInactive()

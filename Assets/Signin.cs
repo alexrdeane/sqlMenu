@@ -15,14 +15,18 @@ using System.Linq;
 
 public class Signin : MonoBehaviour
 {
-    public TMP_InputField usernameField;
-    public TMP_InputField passwordField;
+    public TMP_InputField signupUsernameField;
+    public TMP_InputField signupPasswordField;
+    public TMP_InputField signupEmailField;
+    public TMP_InputField loginUsernameField;
+    public TMP_InputField loginPasswordField;
+    public TMP_InputField forgotEmailField;
     public TMP_InputField forgotPasswordField;
-    public TMP_InputField emailField;
+
     public TMP_InputField newPassword;
     public TMP_InputField updateCode;
 
-    public string[] characters = { "abcdefghijklmnopqrstuvwxyz1234567890" };
+    public string[] characters = { "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1","2","3","4","5","6","7","8","9","0" };
     public int randomCharacter;
     public string randomCharacters;
     public string randomCode;
@@ -51,7 +55,7 @@ public class Signin : MonoBehaviour
     }
     public void CreateNewUser()
     {
-        StartCoroutine(CreateUser(usernameField.text, emailField.text, passwordField.text));
+        StartCoroutine(CreateUser(signupUsernameField.text, signupEmailField.text, signupPasswordField.text));
     }
     IEnumerator Login(string username, string password)
     {
@@ -59,8 +63,6 @@ public class Signin : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
-        Debug.Log(username);
-        Debug.Log(password);
         UnityWebRequest webRequest = UnityWebRequest.Post(createLoginURL, form);
 
         yield return webRequest.SendWebRequest();
@@ -74,7 +76,7 @@ public class Signin : MonoBehaviour
     }
     public void NewLogin()
     {
-        StartCoroutine(Login(usernameField.text, passwordField.text));
+        StartCoroutine(Login(loginUsernameField.text, loginPasswordField.text));
     }
 
     IEnumerator ForgotUser(TMP_InputField email)
@@ -98,7 +100,7 @@ public class Signin : MonoBehaviour
     }
     public void CheckEmail(TMP_InputField email)
     {
-        StartCoroutine(ForgotUser(emailField));
+        StartCoroutine(ForgotUser(forgotEmailField));
     }
 
     IEnumerator ForgotPassword(TMP_InputField forgotPasswordField)
@@ -110,17 +112,14 @@ public class Signin : MonoBehaviour
         UnityWebRequest webRequest = UnityWebRequest.Post(forgotURL, form);
 
         yield return webRequest.SendWebRequest();
-       
-            Debug.Log(webRequest.downloadHandler.text);
-        
-       
+        Debug.Log(webRequest.downloadHandler.text);
     }
     public void ForgotPassword()
     {
         StartCoroutine(ForgotPassword(forgotPasswordField));
     }
 
-    private void SendEmail(TMP_InputField email)
+    public void SendEmail(TMP_InputField email)
     {
         RandomCodeGen();
         MailMessage mail = new MailMessage();

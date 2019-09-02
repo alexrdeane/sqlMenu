@@ -2282,10 +2282,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d5b7e4ff7fbad34499aab64f83b3bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usernameField: {fileID: 1941467192}
-  passwordField: {fileID: 1057371800}
+  signupUsernameField: {fileID: 0}
+  signupPasswordField: {fileID: 0}
+  signupEmailField: {fileID: 0}
+  forgotEmailField: {fileID: 0}
   forgotPasswordField: {fileID: 2115173456}
-  emailField: {fileID: 986621558}
   newPassword: {fileID: 2115173456}
   updateCode: {fileID: 1838470590}
   characters:
@@ -4545,7 +4546,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2011407219
 RectTransform:
   m_ObjectHideFlags: 0

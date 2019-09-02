@@ -154,6 +154,7 @@ public class Signin : MonoBehaviour
         WWWForm form = new WWWForm();
         //form.AddField("password_Post", newPassword.text);
         form.AddField("password", password);
+
         UnityWebRequest webRequest = UnityWebRequest.Post(forgotURL, form);
         yield return webRequest.SendWebRequest();
 

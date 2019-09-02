@@ -19,6 +19,8 @@ public class Signin : MonoBehaviour
     public TMP_InputField passwordField;
     public TMP_InputField forgotPasswordField;
     public TMP_InputField emailField;
+    public TMP_InputField newPassword;
+    public TMP_InputField updateCode;
 
     public string[] characters = { "abcdefghijklmnopqrstuvwxyz1234567890" };
     public int randomCharacter;
@@ -57,16 +59,17 @@ public class Signin : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("username", username);
         form.AddField("password", password);
+        Debug.Log(username);
+        Debug.Log(password);
         UnityWebRequest webRequest = UnityWebRequest.Post(createLoginURL, form);
 
         yield return webRequest.SendWebRequest();
+       
         Debug.Log(webRequest.downloadHandler.text);
-        if (webRequest.downloadHandler.text == "Incorrect Password")
+
+        if (webRequest.downloadHandler.text == "Login Successful")
         {
             SceneManager.LoadScene(1);
-        } else
-        {
-            Debug.Log(webRequest.downloadHandler.text);
         }
     }
 
@@ -86,7 +89,7 @@ public class Signin : MonoBehaviour
         {
             user = webRequest.downloadHandler.text;
             SendEmail(email);
-        } 
+        }
     }
     public void CheckEmail(TMP_InputField email)
     {
@@ -113,7 +116,7 @@ public class Signin : MonoBehaviour
     }
 
 
-        public void NewLogin()
+    public void NewLogin()
     {
         StartCoroutine(Login(usernameField.text, passwordField.text));
     }
@@ -134,6 +137,28 @@ public class Signin : MonoBehaviour
         ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate cert, X509Chain chain, SslPolicyErrors policyErrors) { return true; };
         smtpServer.Send(mail);
         Debug.Log("Sending mail");
+    }
+
+    public void ChangePassword()
+    {
+        StartCoroutine(NewPassword(newPassword));
+    }
+
+    IEnumerator NewPassword(TMP_InputField newPassword)
+    {
+        if (updateCode.text == randomCode)
+        {
+            password = newPassword.text;
+        }
+        string forgotURL = "http://localhost/nsirpg/UpdatePassword.php";
+        WWWForm form = new WWWForm();
+        //form.AddField("password_Post", newPassword.text);
+        form.AddField("password", password);
+        UnityWebRequest webRequest = UnityWebRequest.Post(forgotURL, form);
+        yield return webRequest.SendWebRequest();
+
+        Debug.Log(password);
+        Debug.Log(newPassword);
     }
 
     public void RandomCodeGen()

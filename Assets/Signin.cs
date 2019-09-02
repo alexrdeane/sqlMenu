@@ -43,12 +43,12 @@ public class Signin : MonoBehaviour
             UnityWebRequest webRequest = UnityWebRequest.Post(createUserURL, form);
 
             yield return webRequest.SendWebRequest();
-        } else
+        }
+        else
         {
             Debug.Log("BRUH... you aint got no username or email or password");
         }
     }
-
     public void CreateNewUser()
     {
         StartCoroutine(CreateUser(usernameField.text, emailField.text, passwordField.text));
@@ -64,13 +64,17 @@ public class Signin : MonoBehaviour
         UnityWebRequest webRequest = UnityWebRequest.Post(createLoginURL, form);
 
         yield return webRequest.SendWebRequest();
-       
+
         Debug.Log(webRequest.downloadHandler.text);
 
         if (webRequest.downloadHandler.text == "Login Successful")
         {
             SceneManager.LoadScene(1);
         }
+    }
+    public void NewLogin()
+    {
+        StartCoroutine(Login(usernameField.text, passwordField.text));
     }
 
     IEnumerator ForgotUser(TMP_InputField email)
@@ -85,7 +89,8 @@ public class Signin : MonoBehaviour
         if (webRequest.downloadHandler.text == "user not found")
         {
             Debug.Log(webRequest.downloadHandler.text);
-        } else
+        }
+        else
         {
             user = webRequest.downloadHandler.text;
             SendEmail(email);
@@ -100,25 +105,19 @@ public class Signin : MonoBehaviour
     {
         string forgotURL = "http://localhost/nsirpg/UpdatePassword.php";
         WWWForm form = new WWWForm();
+        form.AddField("username_Post", user);
         form.AddField("password_Post", forgotPasswordField.text);
         UnityWebRequest webRequest = UnityWebRequest.Post(forgotURL, form);
 
         yield return webRequest.SendWebRequest();
-        Debug.Log(webRequest.downloadHandler.text);
-        if (webRequest.downloadHandler.text == "error insert failed")
-        {
+       
             Debug.Log(webRequest.downloadHandler.text);
-        } else
-        {
-            password = webRequest.downloadHandler.text;
-            SendEmail(forgotPasswordField);
-        }
+        
+       
     }
-
-
-    public void NewLogin()
+    public void ForgotPassword()
     {
-        StartCoroutine(Login(usernameField.text, passwordField.text));
+        StartCoroutine(ForgotPassword(forgotPasswordField));
     }
 
     private void SendEmail(TMP_InputField email)
@@ -137,29 +136,6 @@ public class Signin : MonoBehaviour
         ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate cert, X509Chain chain, SslPolicyErrors policyErrors) { return true; };
         smtpServer.Send(mail);
         Debug.Log("Sending mail");
-    }
-
-    public void ChangePassword()
-    {
-        StartCoroutine(NewPassword(newPassword));
-    }
-
-    IEnumerator NewPassword(TMP_InputField newPassword)
-    {
-        if (updateCode.text == randomCode)
-        {
-            password = newPassword.text;
-        }
-        string forgotURL = "http://localhost/nsirpg/UpdatePassword.php";
-        WWWForm form = new WWWForm();
-        //form.AddField("password_Post", newPassword.text);
-        form.AddField("password", password);
-
-        UnityWebRequest webRequest = UnityWebRequest.Post(forgotURL, form);
-        yield return webRequest.SendWebRequest();
-
-        Debug.Log(password);
-        Debug.Log(newPassword);
     }
 
     public void RandomCodeGen()

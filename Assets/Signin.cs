@@ -24,14 +24,14 @@ public class Signin : MonoBehaviour
     public TMP_InputField forgotPasswordField;
 
     public TMP_InputField newPassword;
-    public static TMP_InputField updateCode;
+    public TMP_InputField updateCode;
 
     public string[] characters = { "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1","2","3","4","5","6","7","8","9","0" };
     public int randomCharacter;
     public string randomCharacters;
-    public static string randomCode;
+    public string randomCode;
     private string user;
-    private string password;
+    private string pasword;
 
     public UnityEngine.UI.Text notification;
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UIButtons : MonoBehaviour
 {
+    public Signin signIn;
+
     public GameObject createAccountMenu;
     public GameObject logIntoAccountMenu;
     public GameObject forgotAccountMenu;
@@ -49,7 +51,7 @@ public class UIButtons : MonoBehaviour
     public void SubmitCodeButton()
     {
         SetAllInactive();
-        if (Signin.updateCode.text == Signin.randomCode)
+        if (signIn.updateCode.text == signIn.randomCode)
         {
             changePasswordMenu.SetActive(true);
         }

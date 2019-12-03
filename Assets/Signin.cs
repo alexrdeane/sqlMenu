@@ -31,7 +31,7 @@ public class Signin : MonoBehaviour
     public string randomCharacters;
     public string randomCode;
     private string user;
-    private string pasword;
+    private string password;
 
     public UnityEngine.UI.Text notification;
 
